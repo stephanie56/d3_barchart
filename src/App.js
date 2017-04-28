@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import Chart from './Chart';
 import './App.css';
 
 class App extends Component {
@@ -12,14 +13,22 @@ class App extends Component {
 
   _handleChart(){
     console.log('trigger handle chart!');
-    d3.selectAll('.Chart').style('background-color', 'red');
+    d3.selectAll('.Chart')
+    .data(this.state.data)
+      .style('width', (d) => {  return d * 10 + 'px'; });
   }
 
 
   render() {
     return (
       <div className="App">
-        <div className="Chart"></div>
+        {
+          this.state.data.map((number) => {
+            return (
+              <Chart number={number} />
+            );
+          })
+        }
         <input type='button' onClick={this._handleChart.bind(this)} value="change chart!"></input>
       </div>
     );
